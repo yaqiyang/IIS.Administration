@@ -1,159 +1,159 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <Import Project="..\..\build\sign.props" />
-    <Import Project="..\..\build\version.props" />
-    <Import Project="..\..\build\Microsoft.IIS.Administration.props" />
+  <Import Project="..\..\build\sign.props" />
+  <Import Project="..\..\build\version.props" />
+  <Import Project="..\..\build\Microsoft.IIS.Administration.props" />
 
-    <PropertyGroup>
-        <VersionPrefix>$(IISAdministrationVersion)</VersionPrefix>
-        <TargetFramework>$(IISAdministrationTargetFramework)</TargetFramework>
-        <PreserveCompilationContext>true</PreserveCompilationContext>
-        <AssemblyName>Microsoft.IIS.Administration</AssemblyName>
-        <OutputType>Exe</OutputType>
-        <PackageId>Microsoft.IIS.Administration</PackageId>
-        <IsTransformWebConfigDisabled>true</IsTransformWebConfigDisabled>
-        <OutDir>$(AppOutputRoot)</OutDir>
-        <PublishDir>$(AppPublishRoot)</PublishDir>
-    </PropertyGroup>
+  <PropertyGroup>
+    <VersionPrefix>$(IISAdministrationVersion)</VersionPrefix>
+    <TargetFramework>$(IISAdministrationTargetFramework)</TargetFramework>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+    <AssemblyName>Microsoft.IIS.Administration</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <PackageId>Microsoft.IIS.Administration</PackageId>
+    <IsTransformWebConfigDisabled>true</IsTransformWebConfigDisabled>
+    <OutDir>$(AppOutputRoot)</OutDir>
+    <PublishDir>$(AppPublishRoot)</PublishDir>
+  </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="plugins\**" />
+    <EmbeddedResource Remove="plugins\**" />
+    <None Remove="plugins\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="wwwroot\**\*;Views\**\*">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+    <None Update="Properties\PublishProfiles;node_modules;bower_components;**.xproj;**.user;**.vspscc;approot;log.txt;logs;config\**\*;plugins">
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </None>
+    <Content Update="approot;log.txt;logs;config\**\*">
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.IIS.Administration.Files.Core\Microsoft.IIS.Administration.Files.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="config\api-keys.json" />
+    <None Remove="config\appsettings.json" />
+    <None Remove="config\modules.json" />
+    <None Remove="Views\AccessKeys\Index.cshtml" />
+    <None Remove="Views\Connect\Index.cshtml" />
+    <None Remove="Views\Explorer\Index.cshtml" />
+    <None Remove="Views\Ping\Index.cshtml" />
+    <None Remove="Views\Shared\_Layout.cshtml" />
+    <None Remove="wwwroot\css\access-keys.css" />
+    <None Remove="wwwroot\css\connect.css" />
+    <None Remove="wwwroot\css\explorer.css" />
+    <None Remove="wwwroot\css\main.css" />
+    <None Remove="wwwroot\js\access-keys.js" />
+    <None Remove="wwwroot\js\connect.js" />
+    <None Remove="wwwroot\js\explorer.js" />
+    <None Remove="wwwroot\js\main.js" />
+    <None Remove="wwwroot\lib\jquery-3.2.0.min\jquery.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="config\api-keys.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="config\appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="config\modules.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MicroBuild.Core" Version="$(MicroBuildCoreVersion)">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+      <PackageReference Include="Microsoft.AspNetCore.Hosting.WindowsServices" Version="6.0.1" />
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.1" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(SignType)' != '' ">
+    <FilesToSign Include="$(OutDir)\$(TargetFileName);">
+      <Authenticode>$(SigningIdentity)</Authenticode>
+    </FilesToSign>
+  </ItemGroup>
+
+  <Target Name="CreatConfigs" BeforeTargets="PrepareForBuild">
+    <Exec Command="powershell -NonInteractive -executionpolicy Unrestricted -command &quot;&amp;'..\..\scripts\build\Copy-Configs.ps1' '$(MSBuildProjectDirectory)'&quot;" />
+  </Target>
+
+  <Target Name="CleanBuildDir" Condition="$(CleanBuildDir) != ''" AfterTargets="Build">
+    <Exec Command="powershell -NonInteractive -executionpolicy Unrestricted -command &quot;&amp;..\..\scripts\build\Clean-BuildDir.ps1&quot;" />
+  </Target>
+
+  <!-- Workaround for: Files generated during build are not copying to publish directory on first publish https://github.com/dotnet/cli/issues/5498#issuecomment-275932671 -->
+  <Target Name="AddGeneratedContentItems" BeforeTargets="AssignTargetPaths" DependsOnTargets="PrepareForPublish">
     <ItemGroup>
-        <Compile Remove="plugins\**" />
-        <EmbeddedResource Remove="plugins\**" />
-        <None Remove="plugins\**" />
+      <Content Include="wwwroot/**/*.js" CopyToPublishDirectory="PreserveNewest" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder);@(Content)" />
     </ItemGroup>
+  </Target>
 
-    <ItemGroup>
-        <None Update="wwwroot\**\*;Views\**\*">
-            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-        </None>
-        <None Update="Properties\PublishProfiles;node_modules;bower_components;**.xproj;**.user;**.vspscc;approot;log.txt;logs;config\**\*;plugins">
-            <CopyToPublishDirectory>Never</CopyToPublishDirectory>
-        </None>
-        <Content Update="approot;log.txt;logs;config\**\*">
-            <CopyToPublishDirectory>Never</CopyToPublishDirectory>
-        </Content>
-    </ItemGroup>
+  <ItemGroup>
+    <AllPluginDlls Include="$(PluginsPublishRoot)\**\*"></AllPluginDlls>
+    <PluginDlls Include="$(PluginsPublishRoot)\**\*">
+      <DuplicateDependency>$(AppPublishRoot)%(RecursiveDir)%(Filename)%(Extension)</DuplicateDependency>
+    </PluginDlls>
+  </ItemGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\Microsoft.IIS.Administration.Files.Core\Microsoft.IIS.Administration.Files.Core.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Fix4960ActionFilter.cs" />
+    <Compile Remove="JsonOutputFormatter.cs" />
+    <Compile Remove="Security\AntiForgeryTokenStore.cs" />
+  </ItemGroup>
 
-    <ItemGroup>
-        <None Remove="config\api-keys.json" />
-        <None Remove="config\appsettings.json" />
-        <None Remove="config\modules.json" />
-        <None Remove="Views\AccessKeys\Index.cshtml" />
-        <None Remove="Views\Connect\Index.cshtml" />
-        <None Remove="Views\Explorer\Index.cshtml" />
-        <None Remove="Views\Ping\Index.cshtml" />
-        <None Remove="Views\Shared\_Layout.cshtml" />
-        <None Remove="wwwroot\css\access-keys.css" />
-        <None Remove="wwwroot\css\connect.css" />
-        <None Remove="wwwroot\css\explorer.css" />
-        <None Remove="wwwroot\css\main.css" />
-        <None Remove="wwwroot\js\access-keys.js" />
-        <None Remove="wwwroot\js\connect.js" />
-        <None Remove="wwwroot\js\explorer.js" />
-        <None Remove="wwwroot\js\main.js" />
-        <None Remove="wwwroot\lib\jquery-3.2.0.min\jquery.min.js" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <EmbeddedResource Include="config\api-keys.json">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </EmbeddedResource>
-        <EmbeddedResource Include="config\appsettings.json">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </EmbeddedResource>
-        <EmbeddedResource Include="config\modules.json">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </EmbeddedResource>
-    </ItemGroup>
-
-    <ItemGroup>
-        <PackageReference Include="MicroBuild.Core" Version="$(MicroBuildCoreVersion)">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-        </PackageReference>
-        <PackageReference Include="Microsoft.AspNetCore.Hosting.WindowsServices" Version="6.0.1" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.1" />
-    </ItemGroup>
-
-    <ItemGroup Condition=" '$(SignType)' != '' ">
-        <FilesToSign Include="$(OutDir)\$(TargetFileName);">
-            <Authenticode>$(SigningIdentity)</Authenticode>
-        </FilesToSign>
-    </ItemGroup>
-
-    <Target Name="CreatConfigs" BeforeTargets="PrepareForBuild">
-        <Exec Command="powershell -NonInteractive -executionpolicy Unrestricted -command &quot;&amp;'..\..\scripts\build\Copy-Configs.ps1' '$(MSBuildProjectDirectory)'&quot;" />
-    </Target>
-
-    <Target Name="CleanBuildDir" Condition="$(CleanBuildDir) != ''" AfterTargets="Build">
-        <Exec Command="powershell -NonInteractive -executionpolicy Unrestricted -command &quot;&amp;..\..\scripts\build\Clean-BuildDir.ps1&quot;" />
-    </Target>
-
-    <!-- Workaround for: Files generated during build are not copying to publish directory on first publish https://github.com/dotnet/cli/issues/5498#issuecomment-275932671 -->
-    <Target Name="AddGeneratedContentItems" BeforeTargets="AssignTargetPaths" DependsOnTargets="PrepareForPublish">
-        <ItemGroup>
-            <Content Include="wwwroot/**/*.js" CopyToPublishDirectory="PreserveNewest" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder);@(Content)" />
-        </ItemGroup>
-    </Target>
-
-    <ItemGroup>
-        <AllPluginDlls Include="$(PluginsPublishRoot)\**\*"></AllPluginDlls>
-        <PluginDlls Include="$(PluginsPublishRoot)\**\*">
-            <DuplicateDependency>$(AppPublishRoot)%(RecursiveDir)%(Filename)%(Extension)</DuplicateDependency>
-        </PluginDlls>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Compile Remove="Fix4960ActionFilter.cs" />
-      <Compile Remove="JsonOutputFormatter.cs" />
-      <Compile Remove="Security\AntiForgeryTokenStore.cs" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <Content Include="Views\AccessKeys\Index.cshtml">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
-        <Content Include="Views\Connect\Index.cshtml">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
-        <Content Include="Views\Explorer\Index.cshtml">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
-        <Content Include="Views\Ping\Index.cshtml">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
-        <Content Include="Views\Shared\_Layout.cshtml">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
-        <Content Include="wwwroot\css\access-keys.css">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
-        <Content Include="wwwroot\css\connect.css">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
-        <Content Include="wwwroot\css\explorer.css">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
-        <Content Include="wwwroot\css\main.css">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
-        <Content Include="wwwroot\js\access-keys.js">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
-        <Content Include="wwwroot\js\connect.js">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
-        <Content Include="wwwroot\js\explorer.js">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
-        <Content Include="wwwroot\js\main.js">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
-        <Content Include="wwwroot\lib\jquery-3.2.0.min\jquery.min.js">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
-    </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\AccessKeys\Index.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Connect\Index.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Explorer\Index.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Ping\Index.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Shared\_Layout.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\css\access-keys.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\css\connect.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\css\explorer.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\css\main.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\js\access-keys.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\js\connect.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\js\explorer.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\js\main.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\lib\jquery-3.2.0.min\jquery.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>
