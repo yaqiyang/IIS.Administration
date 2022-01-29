@@ -3,7 +3,6 @@
 
 
 namespace Microsoft.IIS.Administration {
-    using AspNetCore.Antiforgery.Internal;
     using AspNetCore.Builder;
     using AspNetCore.Hosting;
     using AspNetCore.Http;
@@ -17,6 +16,7 @@ namespace Microsoft.IIS.Administration {
     using Extensions.Configuration;
     using Extensions.DependencyInjection;
     using Extensions.DependencyInjection.Extensions;
+    using Extensions.Hosting;
     using Files;
     using Logging;
     using Microsoft.IIS.Administration.Core.Utils;
@@ -25,14 +25,14 @@ namespace Microsoft.IIS.Administration {
     using Serilog;
     using System;
     using System.Collections.Generic;
-    using System.IO;
+    using System.IO;    
 
 
     public class Startup : BaseModule {
-        private IHostingEnvironment _hostingEnv;
+        private IWebHostEnvironment _hostingEnv;
         private IConfiguration _config;
 
-        public Startup(IHostingEnvironment env, IConfiguration config) {
+        public Startup(IWebHostEnvironment env, IConfiguration config) {
             _hostingEnv = env ?? throw new ArgumentNullException(nameof(env));
             _config = config ?? throw new ArgumentNullException(nameof(config));
 
@@ -81,12 +81,7 @@ namespace Microsoft.IIS.Administration {
             services.AddConfigurationWriter(_hostingEnv);
 
             //
-            // Antiforgery
-            services.TryAddSingleton<IAntiforgeryTokenStore, AntiForgeryTokenStore>();
-            services.AddAntiforgery(o => {
-                o.RequireSsl = true;
-                o.CookieName = o.FormFieldName = HeaderNames.XSRF_TOKEN;
-            });
+            // Antiforgery. The original classes are not accessible anymore. Need to test this
 
             //
             // Caching
@@ -96,17 +91,8 @@ namespace Microsoft.IIS.Administration {
             // MVC
             IMvcBuilder builder = services.AddMvc(o => {
 
-                // Replace default json output formatter
-                o.OutputFormatters.RemoveType<AspNetCore.Mvc.Formatters.JsonOutputFormatter>();
-
-                var settings = JsonSerializerSettingsProvider.CreateSerializerSettings();
-                o.OutputFormatters.Add(new JsonOutputFormatter(settings, System.Buffers.ArrayPool<char>.Shared));
-
-                // TODO
-                // Workaround filter to fix Object Results returned from controllers
-                // Remove when https://github.com/aspnet/Mvc/issues/4960 is resolved
-                o.Filters.Add(typeof(Fix4960ActionFilter));
-
+                // Default json output formatter is not replaced since AspNetCore.Mvc.Formatters.JsonOutputFormatter
+                // does not exist anymore. Need test this
                 o.Filters.Add(typeof(ActionFoundFilter));
 
                 o.Filters.Add(typeof(ResourceInfoFilter));
@@ -125,7 +111,7 @@ namespace Microsoft.IIS.Administration {
         // Configure is called after ConfigureServices is called.
         public void Configure(IApplicationBuilder app,
             IHttpContextAccessor contextAccessor,
-            IApplicationLifetime applicationLifeTime) {
+            IHostApplicationLifetime applicationLifeTime) {
             //
             // Initialize the Environment
             //

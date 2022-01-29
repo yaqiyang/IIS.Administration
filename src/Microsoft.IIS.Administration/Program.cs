@@ -91,7 +91,7 @@ namespace Microsoft.IIS.Administration {
                     shutdownLog.Source = Program.EventSourceName;
                     shutdownLog.WriteEntry($"Microsoft IIS Administration API has shutdown unexpectively because the error: {ex.ToString()}", EventLogEntryType.Error);
                 }
-                throw ex;
+                throw;
             }
         }
     }
