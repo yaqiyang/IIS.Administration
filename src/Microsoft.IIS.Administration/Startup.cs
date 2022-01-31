@@ -81,7 +81,11 @@ namespace Microsoft.IIS.Administration {
             services.AddConfigurationWriter(_hostingEnv);
 
             //
-            // Antiforgery. The original classes are not accessible anymore. Need to test this
+            // Antiforgery. The original Interface IAntiforgeryTokenStore and some related classes
+            // are not accessible anymore. Need to test this
+            services.AddAntiforgery(o => {
+                o.Cookie.Name = o.FormFieldName = HeaderNames.XSRF_TOKEN;
+            });
 
             //
             // Caching
