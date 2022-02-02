@@ -36,17 +36,17 @@ namespace Microsoft.IIS.Administration {
                 using (var host = new WebHostBuilder()
                     .UseContentRoot(configHelper.RootPath)
                     .ConfigureLogging((hostingContext, logging) => {
-                        logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
+                        _ = logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
 
                     //
                     // Console log is not available in running as a Service
                     if (!runAsAService)
                         {
-                            logging.AddConsole();
+                            _ = logging.AddConsole();
                         }
 
-                        logging.AddDebug();
-                        logging.AddEventLog(new EventLogSettings()
+                        _ = logging.AddDebug();
+                        _ = logging.AddEventLog(new EventLogSettings()
                         {
                             SourceName = EventSourceName
                         });
