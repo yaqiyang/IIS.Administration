@@ -9,9 +9,14 @@ To find the latest news for the IIS Administration api visit the blog at https:/
 Documentation is available at https://docs.microsoft.com/en-us/IIS-Administration 
 
 ### Installation: ###
+* Must first remove preview builds of .Net Core. The service does not work with preview builds of .Net Core.
+* Must remove previously installed versions of IIS Administration.
+* Repair does not work. Must do a full uninstall/re-install.
+* If errors occurred during installation, manually remove folder C:\Program Files\IIS Administration and Windows service "Microsoft IIS Administration".
+* If you don't have permissions for the APIs, add yourself to user group "IIS Administration API Owners" on the hosting machine.
 * Supports 64 bit Windows Server 2008 R2 and above
 
-The latest installer can be obtained from https://manage.iis.net/get. The installer will automatically download and install all dependencies.
+The latest installer can be obtained from https://iis-manage.azurewebsites.net/get. The installer will automatically download and install all dependencies.
 
 ### Nano Server Installation: ###
 There is a blog post to get up and running on Nano Server located at https://blogs.iis.net/adminapi/microsoft-iis-administration-on-nano-server.
@@ -26,12 +31,14 @@ C:\src\repos\IIS.Administration\scripts\Configure-DevEnvironment.ps1 -ConfigureT
 * Tests can also be run with the CLI
 
 ### Publish and Install: ###
-Publishing and installing can be done through a PowerShell script. This requires the .NET Core SDK and Bower.
+Publishing and installing can be done through a PowerShell script. This requires the .NET Core SDK.
 
 ```
-# Replace the path to match your clone location
-C:\src\repos\IIS.Administration\scripts\publish\publish.ps1
-C:\src\repos\IIS.Administration\scripts\publish\bin\setup\setup.ps1 Install -Verbose
+# Replace the path to match your clone location. First, start the developer command prompt for Visual Studio 2022. Then, publish the solution and build the installer at installer\IISAdministrationBundle\bin\x64\Release.
+%comspec% /k "C:\Program Files\Microsoft Visual Studio\2022\Preview\Common7\Tools\VsDevCmd.bat"
+cd /d C:\src\repos\IIS.Administration
+msbuild Microsoft.IIS.Administration.sln /t:publish
+msbuild installer /p:configuration=release
 ```
 
 ### Develop and Debug in Visual studio 2017: ###
