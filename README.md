@@ -33,8 +33,8 @@ C:\src\repos\IIS.Administration\scripts\Configure-DevEnvironment.ps1 -ConfigureT
 ### Publish and Install: ###
 Publishing and installing can be done through a PowerShell script. This requires the .NET Core SDK.
 
+In the following code, replace the path to match your clone location. It first starts the developer command prompt for Visual Studio 2022, publishes the solution and finally, builds the installer at installer\IISAdministrationBundle\bin\x64\Release.
 ```
-# Replace the path to match your clone location. First, start the developer command prompt for Visual Studio 2022. Then, publish the solution and build the installer at installer\IISAdministrationBundle\bin\x64\Release.
 %comspec% /k "C:\Program Files\Microsoft Visual Studio\2022\Preview\Common7\Tools\VsDevCmd.bat"
 cd /d C:\src\repos\IIS.Administration
 msbuild Microsoft.IIS.Administration.sln /t:publish
