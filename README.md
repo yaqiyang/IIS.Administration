@@ -8,12 +8,14 @@ To find the latest news for the IIS Administration api visit the blog at https:/
 
 Documentation is available at https://docs.microsoft.com/en-us/IIS-Administration 
 
-### Installation: ###
+### Installation and Known Issues: ###
 * Must first remove preview builds of .Net Core. The service does not work with preview builds of .Net Core.
 * Must remove previously installed versions of IIS Administration.
 * Repair does not work. Must do a full uninstall/re-install.
 * If errors occurred during installation, manually remove folder C:\Program Files\IIS Administration and Windows service "Microsoft IIS Administration".
-* If you don't have permissions for the APIs, add yourself to user group "IIS Administration API Owners" on the hosting machine.
+* If you don't have permissions for the APIs, add yourself to user group "IIS Administration API Owners" on the host machine.
+* If you still don't have permissions after adding yourself to "IIS Administration API Owners", add yourself to users/administrators in appsettings.json.
+* If you have trouble viewing the Access Token created from the API Explorer in Microsoft Edge, go to edge://settings/reset and reset your browser's settings.
 * Supports 64 bit Windows Server 2008 R2 and above
 
 The latest installer can be obtained from https://iis-manage.azurewebsites.net/get. The installer will automatically download and install all dependencies.
@@ -37,9 +39,9 @@ In the following code, replace the path to match your clone location. It first s
 ```
 %comspec% /k "C:\Program Files\Microsoft Visual Studio\2022\Preview\Common7\Tools\VsDevCmd.bat"
 cd /d C:\src\repos\IIS.Administration
-msbuild Microsoft.IIS.Administration.sln /t:publish
+msbuild -restore Microsoft.IIS.Administration.sln /t:publish
 
-build\nuget.exe restore installer\IISAdministrationSetup.sln
+build\nuget.exe restore installer\IISAdministrationSetup\packages.config -SolutionDirectory installer
 msbuild installer /p:configuration=release
 ```
 
@@ -47,6 +49,19 @@ msbuild installer /p:configuration=release
 * Clone this project
 * Load the project in visual studio
 * Try restoring all the NuGet packages
+* Open src\Microsoft.IIS.Administration\config\appsettings.json, modify the users section as below,
+```
+"users": {
+      "administrators": [
+        "mydomain\\myusername",
+        "myusername@mycompany.com",
+        "IIS Administration API Owners"
+      ],
+      "owners": [
+        "IIS Administration API Owners"
+      ]
+    },
+```    
 * Run PowerShell as an Administrator
 * Run Configure-DevEnvironment.ps1 script in the scripts dir
 * From the visual studio run profile menu select option Microsoft.IIS.Administration and run the application.

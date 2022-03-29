@@ -56,7 +56,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <!-- Previous versions of .Net packages referenced by Microsoft.Web.Administration 11.1.0 
+      <PackageReference Include="MicroBuild.Core" Version="$(MicroBuildCoreVersion)">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+      </PackageReference>
+      <!-- Previous versions of .Net packages referenced by Microsoft.Web.Administration 11.1.0 
 	     Need to ship them because they are different from the newest .Net versions -->
     <PackageReference Include="Microsoft.Win32.Primitives" Version="4.0.1" />
     <PackageReference Include="Microsoft.Win32.Registry" Version="4.0.0" />
