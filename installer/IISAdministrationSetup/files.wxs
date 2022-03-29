@@ -14,7 +14,7 @@
   
   <Fragment>
     <Component Id="C_ThirdPartyNotice.txt" Guid="3F38363B-ED38-4919-ACE6-DF7CC7578FDF" Directory="versionDir" Win64="$(var.IsWin64)">
-      <File Id="ThirdPartyNotice.txt" Source="$(var.ArtifactsRoot)\ThirdPartyNotices.txt" />
+      <File Id="ThirdPartyNotice.txt" Source="$(var.ArtifactsRoot)\..\ThirdPartyNotices.txt" />
     </Component>
   </Fragment>
 
