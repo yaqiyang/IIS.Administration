@@ -12,13 +12,12 @@ Documentation is available at https://docs.microsoft.com/en-us/IIS-Administratio
 * Must first remove preview builds of .Net Core. The service does not work with preview builds of .Net Core.
 * Must remove previously installed versions of IIS Administration.
 * **_Repair_** does not work. Must do a full uninstall/re-install.
-* If errors occurred during installation, manually remove folder C:\Program Files\IIS Administration and Windows service "Microsoft IIS Administration".
-* If you don't have permissions for the APIs, add yourself to user group "IIS Administration API Owners" on the host machine.
-* If you still don't have permissions after adding yourself to "IIS Administration API Owners", add yourself to users/administrators in appsettings.json.
-* If you have trouble viewing the Access Token created from the API Explorer in Microsoft Edge, go to edge://settings/reset and reset your browser's settings.
-* **_Bindings_** not populated when creating a new Web site using /api/webserver/websites (.Net 6.0 only)
-* **_ValidateAntiForgeryToken_** attribute is disabled.
-* Microsoft.Web.Administration.dll version conflicts with .Net 6.0: Remove all code related to "ms.web.admin.refs" in the future when it is ported to .Net 6.0.
+* If errors occurred during installation, manually remove folder _C:\Program Files\IIS Administration_ and Windows service _"Microsoft IIS Administration"_.
+* If you don't have permissions for the APIs, add yourself to user group _"IIS Administration API Owners"_ on the host machine.
+* If you still don't have permissions after adding yourself to _"IIS Administration API Owners"_, add yourself to users/administrators in appsettings.json.
+* If you have trouble viewing the Access Token created from the API Explorer in Microsoft Edge, go to [edge://settings/reset](edge://settings/reset) and reset your browser's settings.
+* **_ValidateAntiForgeryToken_** attribute is disabled (.Net 6.0 only).
+* Microsoft.Web.Administration.dll version conflicts with .Net 6.0: Remove all code related to **_"ms.web.admin.refs"_** in the future when it is ported to .Net 6.0.
 * Supports 64 bit Windows Server 2008 R2 and above
 
 The latest installer can be obtained from https://iis-manage.azurewebsites.net/get. The installer will automatically download and install all dependencies.
@@ -28,18 +27,12 @@ There is a blog post to get up and running on Nano Server located at https://blo
 
 ### Running Tests: ###
 * Run the ConfigureDevEnvironment script with the test environment flag
-`
-C:\src\repos\IIS.Administration\scripts\Configure-DevEnvironment.ps1 -ConfigureTestEnvironment
-`
+```
+   C:\src\repos\IIS.Administration\scripts\Configure-DevEnvironment.ps1 -ConfigureTestEnvironment
+```
 * Open the project in Visual Studio as an Administrator and launch without debugging
 * Make sure the appsettings.json being used is similar to the one at test\appsettings.test.json. Without the "files" section, new Websites cannot be created. "cors" section is also required.
 * Open another instance of the project (also as Administrator since tests need to create new local users and enable some IIS features) and run the tests located in the 'test' folder
-* **_Test Failures_** for .Net 6.0 version due to binding not working:
-    * Microsoft.IIS.Administration.CentralCertificates.CanCreateCcsBinding 
-    * Microsoft.IIS.Administration.Monitoring.ManySites
-    * Microsoft.IIS.Administration.Tests.Monitoring.WebSite
-    * Microsoft.IIS.Administration.Sites.BindingTypes
-    * Microsoft.IIS.Administration.Tests.Sites.Sni
 * Tests can also be run with the CLI
 
 ### Publish and Install: ###
@@ -55,7 +48,7 @@ build\nuget.exe restore installer\IISAdministrationSetup\packages.config -Soluti
 msbuild installer /p:configuration=release
 ```
 
-### Develop and Debug in Visual studio 2017: ###
+### Develop and Debug in Visual studio 2022: ###
 * Clone this project
 * Load the project in visual studio
 * Try restoring all the NuGet packages
