@@ -64,10 +64,11 @@ namespace Microsoft.IIS.Administration.AccessManagement {
         }
 
 
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         [HttpPost]
         [ResourceInfo(Name = Defines.ApiKeyName)]
         public async Task<object> Post([FromBody] dynamic model) {
+            model = DynamicHelper.ToJObject(model);
             if (model == null) {
                 throw new ApiArgumentException("model");
             }
@@ -92,10 +93,11 @@ namespace Microsoft.IIS.Administration.AccessManagement {
         }
 
 
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         [HttpPatch]
         [ResourceInfo(Name = Defines.ApiKeyName)]
         public async Task<object> Patch(string id, [FromBody] dynamic model) {
+            model = DynamicHelper.ToJObject(model);
             ApiKey key = _keyProvider.GetKey(id);
 
             if (key == null) {
@@ -110,7 +112,7 @@ namespace Microsoft.IIS.Administration.AccessManagement {
         }
 
 
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         [HttpDelete]
         public async Task Delete(string id) {
             ApiKey key = _keyProvider.GetKey(id);

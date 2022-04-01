@@ -211,7 +211,10 @@ namespace Microsoft.IIS.Administration.WebServer.Sites
                 var bindings = new List<object>();
 
                 foreach (Binding b in site.Bindings) {
-                    bindings.Add(ToJsonModel(b));
+                    // ToJsonModel(Binding) does not work.  MissingMethodException,
+                    // 'System.Net.IPEndPoint Microsoft.Web.Administration.Binding.get_EndPoint()'.
+                    // due to .Net version conflicts
+                    //bindings.Add(ToJsonModel(b));
                 }
 
                 obj.bindings = bindings;
