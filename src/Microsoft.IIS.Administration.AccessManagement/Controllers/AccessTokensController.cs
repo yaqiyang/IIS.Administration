@@ -61,7 +61,7 @@ namespace Microsoft.IIS.Administration.AccessManagement {
         }
 
 
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         [HttpPost]
         [ResourceInfo(Name = Defines.AccessTokenName)]
         public async Task<object> Post([FromBody] dynamic model) {

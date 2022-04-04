@@ -64,7 +64,7 @@ namespace Microsoft.IIS.Administration.AccessManagement {
         }
 
 
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         [HttpPost]
         [ResourceInfo(Name = Defines.ApiKeyName)]
         public async Task<object> Post([FromBody] dynamic model) {
@@ -93,7 +93,7 @@ namespace Microsoft.IIS.Administration.AccessManagement {
         }
 
 
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         [HttpPatch]
         [ResourceInfo(Name = Defines.ApiKeyName)]
         public async Task<object> Patch(string id, [FromBody] dynamic model) {
@@ -112,7 +112,7 @@ namespace Microsoft.IIS.Administration.AccessManagement {
         }
 
 
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         [HttpDelete]
         public async Task Delete(string id) {
             ApiKey key = _keyProvider.GetKey(id);

@@ -16,7 +16,6 @@ Documentation is available at https://docs.microsoft.com/en-us/IIS-Administratio
 * If you don't have permissions for the APIs, add yourself to user group _"IIS Administration API Owners"_ on the host machine.
 * If you still don't have permissions after adding yourself to _"IIS Administration API Owners"_, add yourself to users/administrators in appsettings.json.
 * If you have trouble viewing the Access Token created from the API Explorer in Microsoft Edge, go to [edge://settings/reset](edge://settings/reset) and reset your browser's settings.
-* **_ValidateAntiForgeryToken_** attribute is disabled (.Net 6.0 only).
 * Microsoft.Web.Administration.dll version conflicts with .Net 6.0: Remove all code related to **_"ms.web.admin.refs"_** in the future when it is ported to .Net 6.0.
 * Supports 64 bit Windows Server 2008 R2 and above
 

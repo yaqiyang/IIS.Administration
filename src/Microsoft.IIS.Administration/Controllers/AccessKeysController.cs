@@ -33,7 +33,7 @@ namespace Microsoft.IIS.Administration {
             }.ToExpando());
         }
 
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> Create(string purpose, string expiration) {
 
@@ -68,7 +68,7 @@ namespace Microsoft.IIS.Administration {
             }.ToExpando());
         }
 
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> Delete() {
 
@@ -82,7 +82,7 @@ namespace Microsoft.IIS.Administration {
             return RedirectToAction("Index");
         }
 
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> RefreshToken() {
 
