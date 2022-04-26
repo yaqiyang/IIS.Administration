@@ -33,7 +33,7 @@ namespace Microsoft.IIS.Administration.WebServer.SslSettings
             return LocationChanged(SslSettingsHelper.GetLocation(d.id), d);
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.SslSettingsName)]
         public object Get(string id)
         {

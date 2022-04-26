@@ -31,7 +31,7 @@ namespace Microsoft.IIS.Administration.WebServer.HttpResponseHeaders
             return LocationChanged(HttpResponseHeadersHelper.GetLocation(d.id), d);
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.ResponseHeadersName)]
         public object Get(string id)
         {

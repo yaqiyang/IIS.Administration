@@ -32,7 +32,7 @@ namespace Microsoft.IIS.Administration.WebServer.Authentication
             return DigestAuthenticationHelper.ToJsonModel(site, path);
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.DigestAuthenticationName)]
         [RequireGlobalModule(DigestAuthenticationHelper.MODULE, DISPLAY_NAME)]
         public object Get(string id)

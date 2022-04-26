@@ -98,7 +98,7 @@ namespace Microsoft.IIS.Administration.WebServer.VirtualDirectories
             };
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.VirtualDirectoryName)]
         public object Get(string id)
         {

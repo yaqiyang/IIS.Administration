@@ -13,7 +13,6 @@ namespace Microsoft.IIS.Administration.WebServer.StaticContent
     using System.IO;
     using System.Linq;
     using System.Net;
-    using System.Web.Http;
     using Web.Administration;
     using Core.Http;
 
@@ -47,7 +46,7 @@ namespace Microsoft.IIS.Administration.WebServer.StaticContent
             };
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.MimeMapName)]
         public object Get(string id)
         {

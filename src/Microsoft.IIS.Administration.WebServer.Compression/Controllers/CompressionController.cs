@@ -44,7 +44,7 @@ namespace Microsoft.IIS.Administration.WebServer.Compression
             return LocationChanged(CompressionHelper.GetLocation(d.id), d);
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.CompressionName)]
         [RequireGlobalModule(CompressionHelper.STATIC_MODULE, DISPLAY_NAME)]
         [RequireGlobalModule(CompressionHelper.DYNAMIC_MODULE, DISPLAY_NAME)]

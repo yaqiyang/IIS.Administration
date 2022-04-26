@@ -36,7 +36,7 @@ namespace Microsoft.IIS.Administration.Files
             return new EmptyResult();
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public async Task<IActionResult> Get(string id)
         {
             //

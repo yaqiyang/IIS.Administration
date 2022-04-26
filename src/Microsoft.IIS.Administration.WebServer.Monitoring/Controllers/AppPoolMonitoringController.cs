@@ -36,7 +36,7 @@ namespace Microsoft.IIS.Administration.WebServer.Monitoring
         }
 
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.AppPoolMonitoringName)]
         public async Task<object> Get(string id)
         {

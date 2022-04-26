@@ -44,7 +44,7 @@ namespace Microsoft.IIS.Administration.WebServer.HttpResponseHeaders
             };
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.RedirectHeaderName)]
         public object Get(string id)
         {

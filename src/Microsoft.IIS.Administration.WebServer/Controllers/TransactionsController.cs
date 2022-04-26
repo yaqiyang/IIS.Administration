@@ -36,7 +36,7 @@ namespace Microsoft.IIS.Administration.WebServer
             };
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.TransactionName)]
         public object Get(string id)
         {

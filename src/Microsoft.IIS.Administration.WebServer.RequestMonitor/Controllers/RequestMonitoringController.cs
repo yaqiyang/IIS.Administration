@@ -21,7 +21,7 @@ namespace Microsoft.IIS.Administration.WebServer.RequestMonitor
             return LocationChanged(RequestHelper.GetLocation(), RequestHelper.FeatureToJsonModel());
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.MonitorName)]
         [RequireGlobalModule(RequestHelper.MODULE, RequestHelper.DISPLAY_NAME)]
         public object Get(string id)

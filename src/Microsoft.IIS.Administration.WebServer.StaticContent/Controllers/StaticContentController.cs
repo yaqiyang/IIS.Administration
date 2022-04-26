@@ -33,7 +33,7 @@ namespace Microsoft.IIS.Administration.WebServer.StaticContent
             return LocationChanged(StaticContentHelper.GetLocation(d.id), d);
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.StaticContentName)]
         [RequireGlobalModule(StaticContentHelper.MODULE, StaticContentHelper.DISPLAY_NAME)]
         public object Get(string id)

@@ -68,7 +68,7 @@ namespace Microsoft.IIS.Administration.WebServer.RequestMonitor {
             };
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.RequestName)]
         public object Get(string id) {
             var reqId = new RequestId(id);

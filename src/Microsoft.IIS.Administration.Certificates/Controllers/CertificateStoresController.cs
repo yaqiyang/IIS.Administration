@@ -30,7 +30,7 @@ namespace Microsoft.IIS.Administration.Certificates
             };
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.StoresName)]
         public object Get(string id)
         {

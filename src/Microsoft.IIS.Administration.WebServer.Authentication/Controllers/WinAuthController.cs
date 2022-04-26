@@ -31,7 +31,7 @@ namespace Microsoft.IIS.Administration.WebServer.Authentication
             return WindowsAuthenticationHelper.ToJsonModel(site, path);
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.WindowsAuthenticationName)]
         [RequireGlobalModule(WindowsAuthenticationHelper.MODULE, DISPLAY_NAME)]
         public object Get(string id)

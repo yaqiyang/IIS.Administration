@@ -69,7 +69,7 @@ namespace Microsoft.IIS.Administration.WebServer.Applications {
             };
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.WebAppName)]
         public object Get(string id)
         {

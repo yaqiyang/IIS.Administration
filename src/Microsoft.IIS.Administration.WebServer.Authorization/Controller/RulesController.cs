@@ -44,7 +44,7 @@ namespace Microsoft.IIS.Administration.WebServer.Authorization
             };
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.RuleName)]
         public object Get(string id)
         {

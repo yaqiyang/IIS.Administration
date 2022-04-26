@@ -29,7 +29,7 @@ namespace Microsoft.IIS.Administration.WebServer.Authentication
             return AnonymousAuthenticationHelper.ToJsonModel(site, path);
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.AnonAuthenticationName)]
         public object Get(string id)
         {

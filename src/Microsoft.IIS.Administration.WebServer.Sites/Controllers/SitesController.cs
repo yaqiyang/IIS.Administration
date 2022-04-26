@@ -68,7 +68,7 @@ namespace Microsoft.IIS.Administration.WebServer.Sites
             };
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.WebsiteName)]
         public object Get(string id)
         {

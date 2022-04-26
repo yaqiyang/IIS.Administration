@@ -30,7 +30,7 @@ namespace Microsoft.IIS.Administration.WebServer.Delegation
             };
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.DelegationName)]
         public object Get(string id)
         {

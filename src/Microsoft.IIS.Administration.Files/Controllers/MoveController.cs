@@ -70,7 +70,7 @@ namespace Microsoft.IIS.Administration.Files
             return _helper.ToJsonModel(move);
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public object Get(string id)
         {
             MoveOperation move = null;

@@ -36,7 +36,7 @@ namespace Microsoft.IIS.Administration.WebServer.HttpRedirect
             return LocationChanged(RedirectHelper.GetLocation(d.id), d);
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.HttpRedirectName)]
         [RequireGlobalModule(RedirectHelper.MODULE, DISPLAY_NAME)]
         public object Get(string id)

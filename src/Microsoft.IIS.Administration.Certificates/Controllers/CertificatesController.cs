@@ -86,7 +86,7 @@ namespace Microsoft.IIS.Administration.Certificates
             };
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.CertificateName)]
         public async Task<object> Get(string id)
         {

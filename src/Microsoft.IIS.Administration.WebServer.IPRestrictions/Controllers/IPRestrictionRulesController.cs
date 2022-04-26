@@ -46,7 +46,7 @@ namespace Microsoft.IIS.Administration.WebServer.IPRestrictions
             };
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.EntryName)]
         public object Get(string id)
         {

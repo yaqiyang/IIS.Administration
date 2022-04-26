@@ -55,7 +55,7 @@ namespace Microsoft.IIS.Administration.WebServer.WorkerProcesses {
             return obj;
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.WorkerProcessName)]
         public object Get(string id)
         {

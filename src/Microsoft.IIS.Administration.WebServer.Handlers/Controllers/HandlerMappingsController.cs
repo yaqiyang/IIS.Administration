@@ -45,7 +45,7 @@ namespace Microsoft.IIS.Administration.WebServer.Handlers
             };
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.EntryName)]
         public object Get(string id)
         {

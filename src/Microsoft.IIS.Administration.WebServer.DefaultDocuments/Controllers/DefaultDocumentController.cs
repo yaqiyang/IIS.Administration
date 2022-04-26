@@ -36,7 +36,7 @@ namespace Microsoft.IIS.Administration.WebServer.DefaultDocuments
             return LocationChanged(DefaultDocumentHelper.GetLocation(d.id), d);
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.DefaultDocumentsName)]
         [RequireGlobalModule(DefaultDocumentHelper.MODULE, DISPLAY_NAME)]
         public object Get(string id)

@@ -33,7 +33,7 @@ namespace Microsoft.IIS.Administration.WebServer.Modules
             return LocationChanged(ModuleHelper.GetModuleGroupLocation(d.id), d);
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.ModulesName)]
         public object Get(string id)
         {

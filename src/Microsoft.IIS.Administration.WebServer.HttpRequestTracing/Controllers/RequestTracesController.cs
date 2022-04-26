@@ -53,7 +53,7 @@ namespace Microsoft.IIS.Administration.WebServer.HttpRequestTracing
             };
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.TraceName)]
         public async Task<object> Get(string id)
         {

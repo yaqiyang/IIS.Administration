@@ -31,7 +31,7 @@ namespace Microsoft.IIS.Administration.WebServer.Authentication
             return BasicAuthenticationHelper.ToJsonModel(site, path);
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.BasicAuthenticationName)]
         [RequireGlobalModule(BasicAuthenticationHelper.MODULE, DISPLAY_NAME)]
         public object Get(string id)

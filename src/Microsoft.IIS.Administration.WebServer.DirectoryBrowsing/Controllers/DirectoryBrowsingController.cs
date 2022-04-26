@@ -35,7 +35,7 @@ namespace Microsoft.IIS.Administration.WebServer.DirectoryBrowsing
             return LocationChanged(DirectoryBrowsingHelper.GetLocation(d.id), d);
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.DirectoryBrowsingName)]
         [RequireGlobalModule(DirectoryBrowsingHelper.MODULE, DISPLAY_NAME)]
         public object Get(string id)

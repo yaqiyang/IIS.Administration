@@ -33,7 +33,7 @@ namespace Microsoft.IIS.Administration.Files
             };
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.LocationsName)]
         public object Get(string id)
         {

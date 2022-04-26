@@ -46,7 +46,7 @@ namespace Microsoft.IIS.Administration.WebServer.AppPools
             };
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.AppPoolName)]
         public object Get(string id) {
             // Extract the name of the target app pool from the uuid specified in the request

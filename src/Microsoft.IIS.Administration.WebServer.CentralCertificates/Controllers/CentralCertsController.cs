@@ -35,7 +35,7 @@ namespace Microsoft.IIS.Administration.WebServer.CentralCertificates
             return LocationChanged(CentralCertHelper.GetLocation(), CentralCertHelper.ToJsonModel());
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.CentralCertsName)]
         public object Get(string id)
         {

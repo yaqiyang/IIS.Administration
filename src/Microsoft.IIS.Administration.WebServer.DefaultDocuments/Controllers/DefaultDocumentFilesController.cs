@@ -41,7 +41,7 @@ namespace Microsoft.IIS.Administration.WebServer.DefaultDocuments
             };
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.EntryName)]
         public object Get(string id)
         {

@@ -18,7 +18,7 @@ namespace Microsoft.IIS.Administration.WebServer {
             return WebServerHelper.WebServerJsonModel();
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [RequireWebServer]
         public object Get(string id) {
             if(id != WebServerId.Create().Uuid) {

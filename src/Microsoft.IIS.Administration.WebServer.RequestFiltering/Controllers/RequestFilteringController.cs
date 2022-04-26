@@ -33,7 +33,7 @@ namespace Microsoft.IIS.Administration.WebServer.RequestFiltering
             return LocationChanged(RequestFilteringHelper.GetLocation(d.id), d);
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.RequestFilteringName)]
         [RequireGlobalModule(RequestFilteringHelper.MODULE, RequestFilteringHelper.DISPLAY_NAME)]
         public object Get(string id)

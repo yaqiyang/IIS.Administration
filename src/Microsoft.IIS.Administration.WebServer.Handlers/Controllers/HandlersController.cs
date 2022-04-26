@@ -31,7 +31,7 @@ namespace Microsoft.IIS.Administration.WebServer.Handlers
             return LocationChanged(HandlersHelper.GetLocation(d.id), d);
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.HandlersName)]
         public object Get(string id)
         {

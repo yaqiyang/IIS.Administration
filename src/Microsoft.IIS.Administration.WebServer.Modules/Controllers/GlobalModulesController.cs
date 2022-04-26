@@ -41,7 +41,7 @@ namespace Microsoft.IIS.Administration.WebServer.Modules
             };
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.GlobalModuleName)]
         public object Get(string id)
         {

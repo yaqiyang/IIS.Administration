@@ -112,7 +112,7 @@ namespace Microsoft.IIS.Administration.WebServer.Files
             };
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.FileName)]
         public object Get(string id)
         {

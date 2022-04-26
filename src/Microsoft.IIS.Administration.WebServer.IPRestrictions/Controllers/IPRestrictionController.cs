@@ -36,7 +36,7 @@ namespace Microsoft.IIS.Administration.WebServer.IPRestrictions
             return LocationChanged(IPRestrictionsHelper.GetLocation(d.id), d);
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.IpRestrictionsName)]
         [RequireGlobalModule(IPRestrictionsHelper.MODULE, DISPLAY_NAME)]
         public object Get(string id)

@@ -44,7 +44,7 @@ namespace Microsoft.IIS.Administration.WebServer.Modules
             };
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.ModuleEntryName)]
         public object Get(string id) {
             EntryId entryId = new EntryId(id);

@@ -31,7 +31,7 @@ namespace Microsoft.IIS.Administration.WebServer.Authorization
             return AuthorizationHelper.ToJsonModel(site, path);
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.AuthorizationName)]
         [RequireGlobalModule(AuthorizationHelper.MODULE, DISPLAY_NAME)]
         public object Get(string id)
