@@ -27,7 +27,8 @@ namespace Microsoft.IIS.Administration.AccessManagement {
     /// </summary>
     [Authorize(Policy = "ApiKeys")]
     [DisableCors]
-    public class ApiKeysController : ApiEdgeController {
+    [Route("security/api-keys")]
+    public class ApiKeysController : ApiBaseController {
         IApiKeyProvider _keyProvider;
 
         public ApiKeysController(IApiKeyProvider keyProvider) {
@@ -36,7 +37,8 @@ namespace Microsoft.IIS.Administration.AccessManagement {
 
         [HttpGet]
         [ResourceInfo(Name = Defines.ApiKeysName)]
-        public async Task<object> Get() {
+        public async Task<object> Get()
+        {
             _ = SetAntiForgeryTokens();
 
             IEnumerable<ApiKey> keys = await _keyProvider.GetAllKeys();
@@ -49,7 +51,7 @@ namespace Microsoft.IIS.Administration.AccessManagement {
             };
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [ResourceInfo(Name = Defines.ApiKeyName)]
         public object Get(string id) {
             ApiKey key = _keyProvider.GetKey(id);
