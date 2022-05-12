@@ -13,6 +13,7 @@ namespace Microsoft.IIS.Administration.AccessManagement {
     using Core.Security;
 
 
+    //[Route("api/access-token")]
     public class MyTokenController : ApiBaseController {
         IApiKeyProvider _keyProvider;
 
@@ -46,7 +47,7 @@ namespace Microsoft.IIS.Administration.AccessManagement {
             // Renew the key
             string token = await _keyProvider.RenewToken(key);
 
-            return Created(Request.RequestUri.PathAndQuery,
+            return Created(RequestUri.PathAndQuery,
                            AccessTokenHelper.ToJsonModel(new ApiToken() { Token=token, Key=key }));
         }
 

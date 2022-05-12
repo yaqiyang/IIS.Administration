@@ -13,7 +13,6 @@ namespace Microsoft.IIS.Administration.WebServer.StaticContent
     using System.IO;
     using System.Linq;
     using System.Net;
-    using System.Web.Http;
     using Web.Administration;
     using Core.Http;
 

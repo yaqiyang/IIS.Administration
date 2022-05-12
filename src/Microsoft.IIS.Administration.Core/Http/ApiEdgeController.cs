@@ -4,13 +4,15 @@
 
 namespace Microsoft.IIS.Administration.Core.Http {
     using System;
-    using System.Web.Http;
     using AspNetCore.Authorization;
     using AspNetCore.Http;
     using AspNetCore.Mvc;
     using Utils;
 
 
+    // This class is used if we use ApiController attribute
+    // The methods are not called during all tests
+    // It is called through MapEdgeWebApiRoutes in AdminHost.cs
     [Authorize]
     public abstract class ApiEdgeController : ApiController {
         [HttpGet]
@@ -46,7 +48,7 @@ namespace Microsoft.IIS.Administration.Core.Http {
 
             // Make absolute Uri
             if (!uri.IsAbsoluteUri) {
-                var baseUrl = new Uri(Request.RequestUri.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped), UriKind.Absolute);
+                var baseUrl = new Uri(RequestUri.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped), UriKind.Absolute);
                 uri = new Uri(baseUrl, redirectUrl);
             }
 

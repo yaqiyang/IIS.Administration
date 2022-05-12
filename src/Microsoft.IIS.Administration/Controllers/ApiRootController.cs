@@ -10,6 +10,8 @@ namespace Microsoft.IIS.Administration
     using System;
     using Extensions.Configuration;
 
+    //[Route("api")]
+    //[ApiController]
     public class ApiRootController : ApiBaseController
     {
         private const string ApiRootName = "Microsoft.WebServer.Api";

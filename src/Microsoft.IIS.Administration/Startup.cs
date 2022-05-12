@@ -114,7 +114,6 @@ namespace Microsoft.IIS.Administration {
             }
 
             _ = builder.AddControllersAsServices();
-            _ = builder.AddWebApiConventions();
             _ = builder.AddRazorRuntimeCompilation();
         }
 

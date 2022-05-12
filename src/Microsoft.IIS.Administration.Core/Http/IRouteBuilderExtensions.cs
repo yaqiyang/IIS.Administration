@@ -2,10 +2,15 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 
-namespace Microsoft.IIS.Administration.Core.Http {
-    using AspNetCore.Routing;
+namespace Microsoft.IIS.Administration.Core.Http
+{
     using AspNetCore.Builder;
+    using AspNetCore.Routing;
+    using AspNetCore.Routing.Constraints;
     using System;
+    using System.Collections.Generic;
+    //using System.Web.Mvc;
+
     using Utils;
 
     public static class IRouteBuilderExtensions {
@@ -24,6 +29,71 @@ namespace Microsoft.IIS.Administration.Core.Http {
             //
             // Add Route
             return builder.MapWebApiRoute(resourceId.ToString(), template, (object) def);
+        }
+        
+        public static IRouteBuilder MapWebApiRoute(
+            this IRouteBuilder routeCollectionBuilder,
+            string name,
+            string template)
+        {
+            return MapWebApiRoute(routeCollectionBuilder, name, template, defaults: null);
+        }
+
+        public static IRouteBuilder MapWebApiRoute(
+            this IRouteBuilder routeCollectionBuilder,
+            string name,
+            string template,
+            object defaults)
+        {
+            return MapWebApiRoute(routeCollectionBuilder, name, template, defaults, constraints: null);
+        }
+
+        public static IRouteBuilder MapWebApiRoute(
+            this IRouteBuilder routeCollectionBuilder,
+            string name,
+            string template,
+            object defaults,
+            object constraints)
+        {
+            return MapWebApiRoute(routeCollectionBuilder, name, template, defaults, constraints, dataTokens: null);
+        }
+
+        public static IRouteBuilder MapWebApiRoute(
+            this IRouteBuilder routeCollectionBuilder,
+            string name,
+            string template,
+            object defaults,
+            object constraints,
+            object dataTokens)
+        {
+            var mutableDefaults = ObjectToDictionary(defaults);
+
+            if (mutableDefaults.ContainsKey("controller") && !mutableDefaults.ContainsKey("action"))
+            {
+                // must have a default action. This does not work if there are two Get actions in the controller
+                mutableDefaults.Add("action", "Get"); 
+                //mutableDefaults.Add("id", UrlParameter.Optional);
+            }
+
+            mutableDefaults.Add("area", Globals.API_PATH);   // default area name is "api"
+
+            var mutableConstraints = ObjectToDictionary(constraints);
+            mutableConstraints.Add("area", new RequiredRouteConstraint());
+
+            return routeCollectionBuilder.MapRoute(name, template, mutableDefaults, mutableConstraints, dataTokens);
+        }
+
+        private static IDictionary<string, object> ObjectToDictionary(object value)
+        {
+            var dictionary = value as IDictionary<string, object>;
+            if (dictionary != null)
+            {
+                return new RouteValueDictionary(dictionary);
+            }
+            else
+            {
+                return new RouteValueDictionary(value);
+            }
         }
     }
 }

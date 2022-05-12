@@ -27,7 +27,8 @@ namespace Microsoft.IIS.Administration.AccessManagement {
     /// </summary>
     [Authorize(Policy = "ApiKeys")]
     [DisableCors]
-    public class ApiKeysController : ApiEdgeController {
+    //[Route("security/api-keys")]
+    public class ApiKeysController : ApiBaseController {
         IApiKeyProvider _keyProvider;
 
         public ApiKeysController(IApiKeyProvider keyProvider) {

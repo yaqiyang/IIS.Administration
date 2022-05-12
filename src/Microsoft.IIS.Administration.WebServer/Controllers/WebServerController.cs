@@ -8,7 +8,8 @@ namespace Microsoft.IIS.Administration.WebServer {
     using Core.Http;
     using System.Threading.Tasks;
 
-
+    //[Route("api/webserver")]
+    //[ApiController]
     [ResourceInfo(Name=Defines.ResourceName)]
     public class WebServerController : ApiBaseController
     {
